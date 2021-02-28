@@ -23,7 +23,7 @@ module.exports.DatoHelpers = class {
   getModel = async (model) => {
     try {
       const data = await this.from.itemTypes.all();
-      const res = data.find((node) => node.name === model);
+      const res = data.find((node) => node.name.trim() === model);
       if (!res) throw new Error("Model not found!");
       return res;
     } catch (error) {
