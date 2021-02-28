@@ -182,6 +182,13 @@ module.exports.DatoHelpers = class {
           field.validators.itemItemType.itemTypes = ids;
         }
 
+        if ("itemsItemType" in field.validators) {
+          const ids = await this.findAndCreateMissingModels(
+            field.validators.itemsItemType.itemTypes
+          );
+          field.validators.itemsItemType.itemTypes = ids;
+        }
+
         if ("addons" in field.appearance) {
           const res = await this.getAddons(field.appearance.addons);
           const addons = await this.findAndCreateMissingAddons(res, field.appearance.addons);
