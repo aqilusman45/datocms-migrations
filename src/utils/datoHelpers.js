@@ -129,7 +129,7 @@ module.exports.DatoHelpers = class {
     for (const [idx, addon] of sourceAddons.entries()) {
       const targetAddon = await this.getTargetAddon(addon);
       if (!targetAddon) {
-        const res = await this.to.plugins.create(transformAddon);
+        const res = await this.to.plugins.create(transformAddon(addon));
         temp[idx] = {
           ...temp[idx],
           id: res.id
@@ -195,12 +195,32 @@ module.exports.DatoHelpers = class {
           field.appearance.addons = addons;
         }
 
+        if ("editor" in field.appearance) {
+          const res = await this.getEditor(field.appearance.editor);
+          if (res) {
+            const editorId = await this.findAndCreateMissingEditor(res);
+            field.appearance.editor = editorId; 
+          }
+        }
         await this.to.fields.create(model, transformField(field, fieldsets));
       }
     } catch (error) {
       throw error;
     }
   };
+
+  getEditor = async (editorId) => {
+    try {
+      return await this.from.plugins.find(editorId);
+    } catch (error) {
+      return null
+    }
+  }
+
+  findAndCreateMissingEditor = async (sourceEditor) => {
+    const editor = await this.getTargetAddon(sourceEditor);
+    return editor.id;
+  }
 
   migrateModel = async (model) => {
     try {
