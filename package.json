@@ -2,10 +2,24 @@
   "name": "datocms-migration",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "Script that allows you migrate Dato CMS models.",
+  "author": {
+    "email": "aqilusman45@gmail.com",
+    "name": "Muhammad Usman",
+    "url": "https://github.com/aqilusman45"
+  },
   "license": "MIT",
   "scripts": {
     "migrate": "node index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "datocms",
+    "migration",
+    "models"
+  ],
   "dependencies": {
     "datocms-client": "^3.3.0",
     "yargs": "^16.2.0"
